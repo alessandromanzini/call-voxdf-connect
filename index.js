@@ -2,6 +2,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var temp;
 
 const restService = express();
@@ -44,10 +45,10 @@ restService.listen(process.env.PORT || 8000, function() {
 function vox_connection(req){
   const to_call = req.body.queryResult.parameters.phone;
   const uri = "https://api.voximplant.com/platform_api/StartScenarios/?account_id=3043683&api_key=98ce325c-e2d1-48f6-b258-af991184a44f&rule_id=2629150&script_custom_data="+to_call;
-  var xhttp = new XMLHttpRequest();
   
-  xhttp.open("GET", uri, true);
-  xhttp.send();
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", uri, true);
+  xhr.send();
 
   return res.json({
     payload: temp,
