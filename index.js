@@ -32,8 +32,9 @@ restService.post("/vox-connection", function(req, res) {
     req.body.queryResult &&
     req.body.queryResult.parameters &&
     req.body.queryResult.parameters.echoText
-      ? req.body.queryResult.parameters.echoText
+      ? req.body.queryResult.parameters.phone
       : "Non credo di aver capito bene.";
+
   return res.json({
     payload: temp,
     data: temp,
