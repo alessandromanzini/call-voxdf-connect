@@ -2,6 +2,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+var temp;
 
 const restService = express();
 
@@ -13,8 +14,8 @@ restService.use(
 
 restService.use(bodyParser.json());
 
-restService.post("/vox-connection", function(req, res) {
-  var temp = {
+restService.post("/", function(req, res) {
+  temp = {
     google: {
       expectUserResponse: true,
       richResponse: {
@@ -28,23 +29,32 @@ restService.post("/vox-connection", function(req, res) {
       }
     }
   };
-  var speech =
-    req.body.queryResult &&
-    req.body.queryResult.parameters &&
-    req.body.queryResult.parameters.echoText
-      ? req.body.queryResult.parameters.phone
-      : "Non credo di aver capito bene.";
-
-  return res.json({
-    payload: temp,
-    data: temp,
-    fulfillmentText: "vox-connection",
-    speech: speech,
-    displayText: speech,
-    source: "webhook-voxdf-connection"
-  });
+  var action = req.body.queryResult &&
+  req.body.queryResult.action
+    ? req.body.queryResult.action
+    : "";
+  
+  if(action == "vox-connection") return vox_connection(req, res)
 });
 
 restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");
 });
+
+function vox_connection(req){
+  const to_call = req.body.queryResult.parameters.phone;
+  const uri = "https://api.voximplant.com/platform_api/StartScenarios/?account_id=3043683&api_key=98ce325c-e2d1-48f6-b258-af991184a44f&rule_id=2629150&script_custom_data="+to_call;
+  var xhttp = new XMLHttpRequest();
+  
+  xhttp.open("GET", uri, true);
+  xhttp.send();
+
+  return res.json({
+    payload: temp,
+    data: temp,
+    fulfillmentText: "Chiamata iniziata con successo!",
+    speech: speech,
+    displayText: speech,
+    source: "webhook-voxdf-connection"
+  });
+}
