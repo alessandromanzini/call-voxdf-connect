@@ -1,0 +1,6 @@
+{
+  "name": "Webhook-voxdf-connection",
+  "description": "Webhook echo sample",
+  "repository": "https://github.com/alessandromanzini/call-voxdf-connect.git",
+  "keywords": ["api.ai", "dialogflow", "natural language"]
+}
