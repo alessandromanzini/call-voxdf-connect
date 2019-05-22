@@ -48,7 +48,11 @@ function vox_connection(req){
   
   var xhr = new XMLHttpRequest();
   xhr.open("GET", uri, true);
-  xhr.send();
+  try {
+    xhr.send();
+  } catch (e) {
+    speech = e;
+  }  
 
   return res.json({
     payload: temp,
