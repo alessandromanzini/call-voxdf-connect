@@ -46,7 +46,7 @@ function vox_connection(req){
   const to_call = req.body.queryResult.parameters.phone.length==10?"39"+req.body.queryResult.parameters.phone:req.body.queryResult.parameters.phone;
   const uri = "https://api.voximplant.com/platform_api/StartScenarios/?account_id=3043683&api_key=98ce325c-e2d1-48f6-b258-af991184a44f&rule_id=2629150&script_custom_data="+to_call;
   
-  https.request(uri);  
+  https.get(uri);  
 
   return res.json({
     payload: temp,
