@@ -43,19 +43,10 @@ restService.listen(process.env.PORT || 8000, function() {
 });
 
 function vox_connection(req){
-  const to_call = req.body.queryResult.parameters.phone;
+  const to_call = req.body.queryResult.parameters.phone.length==10?"39"+req.body.queryResult.parameters.phone:req.body.queryResult.parameters.phone;
   const uri = "https://api.voximplant.com/platform_api/StartScenarios/?account_id=3043683&api_key=98ce325c-e2d1-48f6-b258-af991184a44f&rule_id=2629150&script_custom_data="+to_call;
   
-  https.get(uri, (resp) => {
-    let data = '';
-    // A chunk of data has been recieved.
-    resp.on('data', (chunk) => {
-    });
-    resp.on('end', () => {
-    });
-  }).on("error", (err) => {
-    speech = err.message;
-  });  
+  https.request(uri);  
 
   return res.json({
     payload: temp,
