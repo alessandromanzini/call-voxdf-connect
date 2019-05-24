@@ -44,13 +44,13 @@ restService.listen(process.env.PORT || 8000, function() {
 
 function pizza_order(req){
   const pNum = req.body.queryResult.parameters.PizzaType.length;
-  const opt = JSON.stringify({
-    "PizzaType":eq.body.queryResult.parameters.PizzaType,
-    "PizzaSize":fill_field(eq.body.queryResult.parameters.PizzaSize, pNum),
-    "Count":fill_field(eq.body.queryResult.parameters.count, pNum),
-    "Phone":(req.body.queryResult.parameters.phone.length==10?"39"+req.body.queryResult.parameters.phone:req.body.queryResult.parameters.phone),
-    "Time":eq.body.queryResult.parameters.time
-  });
+  const opt = eq.body.queryResult.parameters?JSON.stringify({
+    "PizzaType":eq.body.queryResult.parameters.PizzaType?eq.body.queryResult.parameters.PizzaType:[],
+    "PizzaSize":eq.body.queryResult.parameters.PizzaSize?fill_field(eq.body.queryResult.parameters.PizzaSize, pNum):[],
+    "Count":eq.body.queryResult.parameters.count?fill_field(eq.body.queryResult.parameters.count, pNum):[],
+    "Phone":(eq.body.queryResult.parameters.phone?(req.body.queryResult.parameters.phone.length==10?"39"+req.body.queryResult.parameters.phone:req.body.queryResult.parameters.phone):""),
+    "Time":eq.body.queryResult.parameters.time?eq.body.queryResult.parameters.time.getHours()+":"+eq.body.queryResult.parameters.time.getMinutes():""
+  }):{};
 
   vox_connection("2629150", opt);
 
