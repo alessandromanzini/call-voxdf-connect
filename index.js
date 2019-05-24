@@ -43,9 +43,14 @@ restService.listen(process.env.PORT || 8000, function() {
 });
 
 function pizza_order(req){
-  const opt = //"phone:" +
-  req.body.queryResult.parameters.phone.length==10?"39"+req.body.queryResult.parameters.phone:req.body.queryResult.parameters.phone
-  //+ "|params:" + 
+  const pNum = req.body.queryResult.parameters.PizzaType.length;
+  const opt = JSON.stringify({
+    "PizzaType":eq.body.queryResult.parameters.PizzaType,
+    "PizzaSize":fill_field(eq.body.queryResult.parameters.PizzaSize, pNum),
+    "Count":fill_field(eq.body.queryResult.parameters.count, pNum),
+    "Phone":(req.body.queryResult.parameters.phone.length==10?"39"+req.body.queryResult.parameters.phone:req.body.queryResult.parameters.phone),
+    "Time":eq.body.queryResult.parameters.time
+  });
 
   vox_connection("2629150", opt);
 
@@ -64,4 +69,10 @@ function vox_connection(rID, opt){
   https.get(url
             +"&rule_id="+rID
             +"&script_custom_data="+opt);
+}
+function fill_field(obj, cont){
+  if(obj.length<cont)
+    for(var i = obj.length; i<cont; i++)
+      obj.push(obj[i-1]);
+  return obj;
 }
