@@ -48,7 +48,7 @@ function pizza_order(req){
     "PizzaType":req.body.queryResult.parameters.PizzaType?req.body.queryResult.parameters.PizzaType:[],
     "PizzaSize":req.body.queryResult.parameters.PizzaSize?fill_field(req.body.queryResult.parameters.PizzaSize, pNum):[],
     "Count":req.body.queryResult.parameters.count?fill_field(req.body.queryResult.parameters.count, pNum):[],
-    "Phone":(req.body.queryResult.parameters.phone?(req.body.queryResult.parameters.phone.length==10?"39"+req.body.queryResult.parameters.phone:req.body.queryResult.parameters.phone):""),
+    "Phone":(req.body.queryResult.parameters.phone?adjustPhoneNumber(eq.body.queryResult.parameters.phone):""),
     "Time":req.body.queryResult.parameters.time?req.body.queryResult.parameters.time.getHours()+":"+req.body.queryResult.parameters.time.getMinutes():""
   });
 
@@ -76,17 +76,6 @@ function fill_field(obj, cont){
       obj.push(obj[i-1]);
   return obj;
 }
-
-pizza_order({
-  "body":{
-    "queryResult":{
-      "parameters":{
-        "PizzaSize":"ad",
-        "PizzaType":"a",
-        "count":"1",
-        "time":new Date(),
-        "phone":3317958318
-      }
-    }
-  }
-})
+function adjustPhoneNumber(value){
+  return (value.length==10?"39"+value:value)
+}
