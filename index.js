@@ -45,12 +45,15 @@ restService.listen(process.env.PORT || 8000, function() {
 function pizza_order(req){
   const pNum = req.body.queryResult.parameters.PizzaType.length;
   const opt = JSON.stringify({
+    "Phone":adjustPhoneNumber(eq.body.queryResult.parameters.phone)
+  })
+  /*JSON.stringify({
     "PizzaType":req.body.queryResult.parameters.PizzaType?req.body.queryResult.parameters.PizzaType:[],
     "PizzaSize":req.body.queryResult.parameters.PizzaSize?fill_field(req.body.queryResult.parameters.PizzaSize, pNum):[],
     "Count":req.body.queryResult.parameters.count?fill_field(req.body.queryResult.parameters.count, pNum):[],
     "Phone":(req.body.queryResult.parameters.phone?adjustPhoneNumber(eq.body.queryResult.parameters.phone):""),
     "Time":req.body.queryResult.parameters.time?req.body.queryResult.parameters.time.getHours()+":"+req.body.queryResult.parameters.time.getMinutes():""
-  });
+  });*/
 
   vox_connection("2629150", opt);
 
