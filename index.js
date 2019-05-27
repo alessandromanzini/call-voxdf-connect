@@ -51,7 +51,7 @@ function pizza_order(req){
       "PizzaSize":req.body.queryResult.parameters.PizzaSize?fill_field(req.body.queryResult.parameters.PizzaSize, pNum):[],
       "Count":req.body.queryResult.parameters.Count?fill_field(req.body.queryResult.parameters.Count, pNum):[],
       "Phone":(req.body.queryResult.parameters.Phone?adjustPhoneNumber(req.body.queryResult.parameters.Phone):""),
-      "Time":req.body.queryResult.parameters.Time?req.body.queryResult.parameters.Time.getHours()+":"+req.body.queryResult.parameters.Time.getMinutes():""
+      "Time":req.body.queryResult.parameters.Time?req.body.queryResult.parameters.Time.substr(12,8):""
     });
   } else opt = {}
 
