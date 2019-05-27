@@ -49,9 +49,9 @@ function pizza_order(req){
     opt = JSON.stringify({
       "PizzaType":req.body.queryResult.parameters.PizzaType?req.body.queryResult.parameters.PizzaType:[],
       "PizzaSize":req.body.queryResult.parameters.PizzaSize?fill_field(req.body.queryResult.parameters.PizzaSize, pNum):[],
-      "Count":req.body.queryResult.parameters.count?fill_field(req.body.queryResult.parameters.count, pNum):[],
-      "Phone":(req.body.queryResult.parameters.phone?adjustPhoneNumber(req.body.queryResult.parameters.phone):""),
-      "Time":req.body.queryResult.parameters.time?req.body.queryResult.parameters.time.getHours()+":"+req.body.queryResult.parameters.time.getMinutes():""
+      "Count":req.body.queryResult.parameters.Count?fill_field(req.body.queryResult.parameters.Count, pNum):[],
+      "Phone":(req.body.queryResult.parameters.Phone?adjustPhoneNumber(req.body.queryResult.parameters.Phone):""),
+      "Time":req.body.queryResult.parameters.Time?req.body.queryResult.parameters.Time.getHours()+":"+req.body.queryResult.parameters.Time.getMinutes():""
     });
   } else opt = {}
 
