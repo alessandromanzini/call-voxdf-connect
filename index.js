@@ -17,9 +17,9 @@ restService.use(bodyParser.json());
 
 restService.post("/", function(req, res) {
   temp = {
-      google: {
-        expectUserResponse: true,
-        richResponse: {
+    google: {
+      expectUserResponse: true,
+      richResponse: {
         items: [
           {
             simpleResponse: {
@@ -42,6 +42,7 @@ restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");
 });
 
+//actions
 function pizza_order(req){
   var opt;
   if(req.body.queryResult.parameters){
@@ -51,7 +52,7 @@ function pizza_order(req){
       "PizzaSize":req.body.queryResult.parameters.PizzaSize?fill_field(req.body.queryResult.parameters.PizzaSize, pNum):[],
       "Count":req.body.queryResult.parameters.Count?fill_field(req.body.queryResult.parameters.Count, pNum):[],
       "Phone":(req.body.queryResult.parameters.Phone?adjustPhoneNumber(req.body.queryResult.parameters.Phone):""),
-      "Time":req.body.queryResult.parameters.Time?req.body.queryResult.parameters.Time.substr(11,8):""
+      "Time":req.body.queryResult.parameters.Time?req.body.queryResult.parameters.Time.substr(11,5):""
     });
   } else opt = {}
 
@@ -62,7 +63,7 @@ function pizza_order(req){
     data: temp,
     fulfillmentText: "Chiamata iniziata con successo!",
     speech: speech,
-    displayText: speech,
+    displayText: temp.richResponse.items[0].textToSpeech,
     source: "webhook-voxdf-connection"
   });
 }
@@ -73,6 +74,8 @@ function vox_connection(rID, opt){
             +"&rule_id="+rID
             +"&script_custom_data="+opt);
 }
+
+//utilities
 function fill_field(obj, cont){
   if(obj.length<cont)
     for(var i = obj.length; i<cont; i++)
