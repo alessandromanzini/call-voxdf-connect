@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
+const voxUtenteID = "3043683";
 var temp;
 
 const restService = express();
@@ -59,19 +60,18 @@ function pizzaOrder(req){
   voxConnection("2629150", opt);
 
   return res.json({
-    "queryResult":{
-      "payload": temp,
-      "data": temp,
-      "fulfillmentText": "Ordinazione iniziata con successo!",
-      "speech": speech,
-      "displayText": temp.richResponse.items[0].textToSpeech,
-      "source": "webhook-voxdf-connection"
-    }
+    fulfillmentText: "Ordinazione iniziata con successo!"
+    /*payload: temp,
+    data: temp,
+    ,
+    speech: speech,
+    displayText: temp.richResponse.items[0].textToSpeech,
+    source: "webhook-voxdf-connection"*/
   });
 }
 
 function voxConnection(rID, opt){
-  const url = "https://api.voximplant.com/platform_api/StartScenarios/?account_id=3043683&api_key=98ce325c-e2d1-48f6-b258-af991184a44f";
+  const url = "https://api.voximplant.com/platform_api/StartScenarios/?account_id="+voxUtenteID+"&api_key=98ce325c-e2d1-48f6-b258-af991184a44f";
   https.get(url
             +"&rule_id="+rID
             +"&script_custom_data="+opt);
