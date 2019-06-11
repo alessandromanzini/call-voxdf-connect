@@ -35,7 +35,7 @@ restService.post("/", function(req, res) {
   ? req.body.queryResult.action
   : "";
 
-  if(action == "pizza_order") return pizza_order(req, res)
+  if(action == "pizzaOrder") return pizzaOrder(req, res)
 });
 
 restService.listen(process.env.PORT || 8000, function() {
@@ -43,7 +43,7 @@ restService.listen(process.env.PORT || 8000, function() {
 });
 
 //actions
-function pizza_order(req){
+function pizzaOrder(req){
   var opt;
   if(req.body.queryResult.parameters){
     const pNum = req.body.queryResult.parameters.PizzaType?req.body.queryResult.parameters.PizzaType.length:0;
@@ -56,19 +56,21 @@ function pizza_order(req){
     });
   } else opt = {}
 
-  vox_connection("2629150", opt);
+  voxConnection("2629150", opt);
 
   return res.json({
-    payload: temp,
-    data: temp,
-    fulfillmentText: "Chiamata iniziata con successo!",
-    speech: speech,
-    displayText: temp.richResponse.items[0].textToSpeech,
-    source: "webhook-voxdf-connection"
+    queryResult:{
+      payload: temp,
+      data: temp,
+      fulfillmentText: "Ordinazione iniziata con successo!",
+      speech: speech,
+      displayText: temp.richResponse.items[0].textToSpeech,
+      source: "webhook-voxdf-connection"
+    }
   });
 }
 
-function vox_connection(rID, opt){
+function voxConnection(rID, opt){
   const url = "https://api.voximplant.com/platform_api/StartScenarios/?account_id=3043683&api_key=98ce325c-e2d1-48f6-b258-af991184a44f";
   https.get(url
             +"&rule_id="+rID
