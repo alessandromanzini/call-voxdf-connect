@@ -59,13 +59,13 @@ function pizzaOrder(req){
   voxConnection("2629150", opt);
 
   return res.json({
-    queryResult:{
-      payload: temp,
-      data: temp,
-      fulfillmentText: "Ordinazione iniziata con successo!",
-      speech: speech,
-      displayText: temp.richResponse.items[0].textToSpeech,
-      source: "webhook-voxdf-connection"
+    "queryResult":{
+      "payload": temp,
+      "data": temp,
+      "fulfillmentText": "Ordinazione iniziata con successo!",
+      "speech": speech,
+      "displayText": temp.richResponse.items[0].textToSpeech,
+      "source": "webhook-voxdf-connection"
     }
   });
 }
