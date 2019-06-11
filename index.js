@@ -36,7 +36,7 @@ restService.post("/", function(req, res) {
   ? req.body.queryResult.action
   : "";
 
-  if(action == "pizzaOrder") return pizzaOrder(req, res)
+  if(action == "pizza_order") return pizzaOrder(req, res)
 });
 
 restService.listen(process.env.PORT || 8000, function() {
